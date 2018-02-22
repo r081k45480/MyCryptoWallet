@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyCryptoWallet</string>
+    <string name="total_investments">Total investments</string>
+    <string name="total_current_capital">Total current capital</string>
+    <string name="profit">Profit</string>
+    <string name="profit_dveTacke">Profit:</string>
+</resources>
