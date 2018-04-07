@@ -10,8 +10,8 @@ import robii.cryptowallet.model.CoinDetailed;
 /**
  * Created by Robert Sabo on 04-Feb-18.
  */
-
 public interface CoinManager {
+
 	///DetailedCoinView
 	///get all to show on detail veiw
     public CoinDetailed getDetailedCoin(String symbol);

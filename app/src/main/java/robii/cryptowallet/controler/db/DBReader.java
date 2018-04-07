@@ -5,7 +5,6 @@ import java.util.List;
 import robii.cryptowallet.model.Coin;
 import robii.cryptowallet.model.CoinDetailed;
 
-
 public interface DBReader {
 
 	// fill the coin with data from database:

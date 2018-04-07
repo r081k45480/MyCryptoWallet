@@ -11,13 +11,12 @@ import robii.cryptowallet.model.Coin;
 /**
  * Created by Robert Sabo on 04-Feb-18.
  */
-
 public interface RESTReader {
-	
+
     public SortedMap<String, Coin> getAllCoins();
-    
-    public double getCurrentPrice(String symbol); 
-    
+
+    public double getCurrentPrice(String symbol);
+
     public Map<String, Double> getPricesFor(List<String> symbols);
     
     public double getHistoricalPrice(String symbol, Date ts);

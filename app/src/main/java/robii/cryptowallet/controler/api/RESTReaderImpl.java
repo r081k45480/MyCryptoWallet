@@ -25,7 +25,6 @@ import robii.cryptowallet.model.Coin;
 /**
  * Created by Robert Sabo on 04-Feb-18.
  */
-
 public class RESTReaderImpl implements RESTReader{
 
     public static final String URL_BASE = "https://min-api.cryptocompare.com/data/";
@@ -38,6 +37,8 @@ public class RESTReaderImpl implements RESTReader{
     public static final String IMAGE_BASE_URL = "https://www.cryptocompare.com";
     
     public static final Integer NUMBER_OF_DAYS = 10;
+
+    public RESTReaderImpl(){}
 
     @Override
     public SortedMap<String, Coin> getAllCoins() {

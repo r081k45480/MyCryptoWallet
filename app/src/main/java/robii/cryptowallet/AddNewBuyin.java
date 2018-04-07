@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -63,7 +64,6 @@ public class AddNewBuyin extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         me = this;
         while(true) {
-            Log.i("DEBUG","onCreate-1");
             try {
                 Future<SortedMap<String, Coin>> futureAllCoins = Common.getFuture(new Callable<SortedMap<String, Coin>>() {
                     @Override
@@ -87,12 +87,73 @@ public class AddNewBuyin extends Activity {
                 amountEditText = findViewById(R.id.amount_edit_add_buyin);
                 priceEditText = findViewById(R.id.add_buyinpriceEditText);
 
+                dateOfBuyinChoose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DialogFragment newFragment = new DatePickerFragment();
+                        newFragment.show(getFragmentManager(), "datePicker");
+                    }
+                });
+                timeOfBuyinChoose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DialogFragment newFragment = new TimePickerFragment();
+                        newFragment.show(getFragmentManager(), "timePicker");
+                    }
+                });
 
-                Log.i("DEBUG","onCreate-2");
+                investmentEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                        investmendChosed();
+                        return true;
+                    }
+                });
+                investmentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        investmendChosed();
+                    }
+                });
+                amountEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                        amountChosed();
+                        return true;
+                    }
+                });
+                amountEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        amountChosed();
+                    }
+                });
+
+                addBuyinButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        buying.setDate(selectedDate);
+                        buying.setSymbol(coinSelected);
+
+                        final Buying buyinToSave = buying;
+
+                        Future<Object> o = Common.getFuture(new Callable<Object>() {
+                            @Override
+                            public Object call() throws Exception {
+                                database.buyingDao().insertAll(buyinToSave);
+                                return null;
+                            }
+                        });
+                        //didn't helpsed
+                        Common.getResult(o);
+
+                        setResult(Activity.RESULT_OK, null);
+                        finish();
+                    }
+                });
 
                 allCoins = Common.getResult(futureAllCoins);
-
-                Log.i("DEBUG","onCreate-3");
 
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                         (this, android.R.layout.simple_spinner_item,
@@ -116,79 +177,11 @@ public class AddNewBuyin extends Activity {
                     }
                 });
 
-                dateOfBuyinChoose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogFragment newFragment = new DatePickerFragment();
-                        newFragment.show(getFragmentManager(), "datePicker");
-                    }
-                });
-                timeOfBuyinChoose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogFragment newFragment = new TimePickerFragment();
-                        newFragment.show(getFragmentManager(), "timePicker");
-                    }
-                });
-
-
-                investmentEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                        double input = 0.0;
-                        try {
-                            input = Double.parseDouble(investmentEditText.getText() + "");
-                        } catch (Exception e){}
-
-                        buying.setInput(input);
-                        updateAutoSetterFields();
-                        return true;
-                    }
-                });
-                amountEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                        double input = 0.0;
-                        try {
-                            input = Double.parseDouble(amountEditText.getText() + "");
-                        } catch (Exception e){}
-
-                        buying.setAmount(input);
-
-                        updateAutoSetterFields();
-                        return true;
-                    }
-                });
-
-                addBuyinButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        buying.setDate(selectedDate);
-                        buying.setSymbol(coinSelected);
-
-                        final Buying buyinToSave = buying;
-
-                        Future<Object> o = Common.getFuture(new Callable<Object>() {
-                            @Override
-                            public Object call() throws Exception {
-                                database.buyingDao().insertAll(buyinToSave);
-                                return null;
-                            }
-                        });
-                        //didn't helpsed
-                        Common.getResult(o);
-
-                        setResult(Activity.RESULT_OK, null);
-                        finish();
-                    }
-                });
                 Log.i("DEBUG","onCreate-5");
 
                 coinSelected = nameToSymbol.get(coinsArray.get(0));
                 calendar = Calendar.getInstance();
                 setSelectedDate();
-
-                Log.i("DEBUG","onCreate-6");
 
                 break;
             } catch (Exception ex) {
@@ -202,13 +195,38 @@ public class AddNewBuyin extends Activity {
         List<String> coinNames = new ArrayList<>(allCoins.size());
         nameToSymbol = new HashMap<>();
 
-        for(String cur : allCoins.keySet()){
+        Iterator<String> iterator =allCoins.keySet().iterator();
+
+        int i =0;
+        while(iterator.hasNext()){
+            String cur = iterator.next();
             Coin c = allCoins.get(cur);
             coinNames.add(c.getName());
             nameToSymbol.put(c.getName(), c.getSymbol());
         }
 
         return coinNames;
+    }
+
+    private void amountChosed() {
+        double input = 0.0;
+        try {
+            input = Double.parseDouble(amountEditText.getText() + "");
+        } catch (Exception e){}
+
+        buying.setAmount(input);
+
+        updateAutoSetterFields();
+    }
+
+    private void investmendChosed() {
+        double input = 0.0;
+        try {
+            input = Double.parseDouble(investmentEditText.getText() + "");
+        } catch (Exception e){}
+
+        buying.setInput(input);
+        updateAutoSetterFields();
     }
 
     private void coinSelected(final String s) {

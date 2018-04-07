@@ -1,6 +1,7 @@
 package robii.cryptowallet.controler;
 
 
+import android.arch.persistence.room.Insert;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -15,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -24,7 +24,6 @@ import robii.cryptowallet.controler.api.RESTReader;
 import robii.cryptowallet.controler.api.RESTReaderImpl;
 import robii.cryptowallet.controler.db.DBReader;
 import robii.cryptowallet.controler.db.DBReaderImpl;
-import robii.cryptowallet.controler.db.DBReaderTest;
 import robii.cryptowallet.model.Buying;
 import robii.cryptowallet.model.Coin;
 import robii.cryptowallet.model.CoinDetailed;
@@ -33,25 +32,30 @@ import robii.cryptowallet.model.comparators.CoinAmountComparator;
 /**
  * Created by Robert Sabo on 04-Feb-18.
  */
-
 public class CoinManagerImpl implements CoinManager{
-	
-	private RESTReader restReader;
-	private DBReader dbReader;
-		
+
+	public RESTReader restReader;
+
+	public DBReader dbReader;
+
 	public CoinManagerImpl(){
 		this.dbReader = new DBReaderImpl();
 		restReader = new RESTReaderImpl();
-		//TODO: initialize dbReader
+
 		Thread tr = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				allCoins = restReader.getAllCoins();
+				futureAllCoins = Common.getFuture(new Callable<SortedMap<String, Coin>>() {
+					@Override
+					public SortedMap<String, Coin> call() throws Exception {
+						return restReader.getAllCoins();
+					}
+				});
 			}
 		});
 		tr.start();
-		
 	}
+	Future<SortedMap<String ,Coin>> futureAllCoins;
     SortedMap<String, Coin> allCoins;
     Map<String, Coin> myCoinsMap;
     ArrayList<Coin> myCoins;
@@ -98,7 +102,7 @@ public class CoinManagerImpl implements CoinManager{
     @Override
     public SortedMap<String, Coin> getAllCoins() {
     	if(allCoins==null)
-    		allCoins = restReader.getAllCoins();
+    		allCoins = Common.getResult(futureAllCoins);
 
 		return allCoins;
 

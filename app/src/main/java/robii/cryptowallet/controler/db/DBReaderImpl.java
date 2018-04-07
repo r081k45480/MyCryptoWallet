@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+
 import robii.cryptowallet.Common;
 import robii.cryptowallet.model.Buying;
 import robii.cryptowallet.model.Coin;
@@ -20,7 +21,6 @@ import static robii.cryptowallet.MainActivity.database;
 /**
  * Created by Robert Sabo on 10-Feb-18.
  */
-
 public class DBReaderImpl implements DBReader {
 
     List<Coin> myCoins;

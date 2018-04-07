@@ -36,7 +36,6 @@ public class MyCoinsAdapter extends BaseAdapter {
 
     List<Coin> coins;
 
-
     private TextView totalInput;
     private TextView totalCapital;
     private TextView totalProfit;

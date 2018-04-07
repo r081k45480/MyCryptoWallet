@@ -123,8 +123,8 @@ public class Coin implements Comparable<Coin>{
     }
     
     public void setSymbol(String symbol) {
-        initFutureIcon();
         this.symbol = symbol;
+        initFutureIcon();
     }
 
     public void setName(String name) {
@@ -145,12 +145,10 @@ public class Coin implements Comparable<Coin>{
     }
 
     public String getSymbol() {
-
         return symbol;
     }
 
     public String getName(){
-        initFutureIcon();
         return name;
     }
 

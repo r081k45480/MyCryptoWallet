@@ -20,6 +20,7 @@ import java.util.SortedMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+
 import robii.cryptowallet.controler.CoinManager;
 import robii.cryptowallet.controler.CoinManagerImpl;
 import robii.cryptowallet.controler.api.RESTReaderImpl;
@@ -32,7 +33,7 @@ import robii.cryptowallet.model.CoinImageUrl;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static CoinManager coinManager;
+    public static CoinManagerImpl coinManager;
     public static MyDatabase database;
     public static MainActivity me;
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private ListView myCoinsListView;
 
     private MyCoinsAdapter myCoinsAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
