@@ -10,4 +10,6 @@
     <string name="kolicina_value">Coins amount</string>
     <string name="date_time_of_buyin">Date and Time of Buyin</string>
     <string name="add">Add</string>
+    <string name="price_for_date">Price for date</string>
+    <string name="select_coin">Select coin</string>
 </resources>

@@ -117,8 +117,8 @@ public class CoinManagerImpl implements CoinManager{
 	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
     public ArrayList<Coin> getMyCoins() {
-		if(this.myCoins == null)
-			getMyCoinsWithoutPrices();
+		//if(this.myCoins == null)
+		getMyCoinsWithoutPrices();
 
     	List<String> myCoinsSymbols = new ArrayList<>(this.myCoinsMap.keySet());
 

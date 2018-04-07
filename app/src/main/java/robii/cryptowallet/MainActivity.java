@@ -2,7 +2,9 @@ package robii.cryptowallet;
 
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
+import android.content.Intent;
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     public static CoinManager coinManager;
     public static MyDatabase database;
+    public static MainActivity me;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -39,13 +42,19 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private MyCoinsAdapter myCoinsAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        me = this;
+
         coinManager = new CoinManagerImpl();
 
-        database = Room.databaseBuilder(getApplicationContext(),MyDatabase.class, "mycryptos")
-                //.fallbackToDestructiveMigration()
-                .build();
+        if(database == null){
+            database = Room.databaseBuilder(getApplicationContext(),MyDatabase.class, "mycryptos")
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         myCoinsListView = findViewById(R.id.mycoinsListVew);
 
-        onRefresh();
+        if(myCoinsAdapter == null)
+            onRefresh();
 
     }
 
@@ -149,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         try {
-            myCoinsAdapter = new MyCoinsAdapter();
+            myCoinsAdapter = new MyCoinsAdapter(this);
             myCoinsListView.setAdapter(myCoinsAdapter);
 
             mSwipeRefreshLayout.setRefreshing(false);
@@ -158,4 +168,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             e.printStackTrace();
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == AddNewBuyin.REQUEST_CODE) {
+            // no refresh!
+        }
+    }
+
 }

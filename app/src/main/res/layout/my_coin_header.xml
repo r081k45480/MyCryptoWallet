@@ -89,4 +89,15 @@
         app:layout_constraintStart_toEndOf="@+id/textViewCapital"
         app:layout_constraintTop_toBottomOf="@+id/textViewTotalCapital" />
 
+    <ImageButton
+        android:id="@+id/openAddNewCoinButton"
+        android:layout_width="66dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:src="@mipmap/ic_pluss_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

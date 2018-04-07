@@ -28,7 +28,14 @@ public class Buying {
 	protected Coin coin;
 	
 	public Double getAmount(){
+		if(input == null) input = 0.0;
+		if(price == null) return 0.0;
 		return input/price;
+	}
+
+	public void setAmount(double amount){
+		if(price == null || price == 0.0) return;
+		input = amount*price;
 	}
 	
 	public Double getCurrentCapital(){

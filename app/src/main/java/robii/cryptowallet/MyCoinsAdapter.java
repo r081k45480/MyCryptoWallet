@@ -1,13 +1,17 @@
 package robii.cryptowallet;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,9 +41,12 @@ public class MyCoinsAdapter extends BaseAdapter {
     private TextView totalCapital;
     private TextView totalProfit;
     private TextView totalProfitPercentage;
+    private ImageButton openAddNewCoin;
 
+    private Activity parent;
 
-    public MyCoinsAdapter(){
+    public MyCoinsAdapter(Activity parent){
+        this.parent = parent;
 
         Future<ArrayList<Coin>> futureMyCoins = Common.getFuture(new Callable<ArrayList<Coin>>() {
             @Override
@@ -122,10 +129,25 @@ public class MyCoinsAdapter extends BaseAdapter {
         totalCapital = view.findViewById(R.id.textViewTotalCapital);
         totalProfit = view.findViewById(R.id.textViewCapital);
         totalProfitPercentage = view.findViewById(R.id.textViewCapitalPercentage9);
+        openAddNewCoin = view.findViewById(R.id.openAddNewCoinButton);
+
+        openAddNewCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddNewCoin();
+            }
+        });
 
         readHeaderData();
 
         return view;
+    }
+
+    public void openAddNewCoin(){
+        System.out.print("openAddNewCoin-1");
+        Intent intent = new Intent(parent, AddNewBuyin.class);
+        parent.startActivityForResult(intent,AddNewBuyin.REQUEST_CODE);
+        System.out.print("openAddNewCoin-2");
     }
 
     private void readHeaderData() {
