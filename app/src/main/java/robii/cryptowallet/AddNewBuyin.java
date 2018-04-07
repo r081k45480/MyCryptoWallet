@@ -63,7 +63,7 @@ public class AddNewBuyin extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         me = this;
         while(true) {
-            System.out.print("onCreate-1");
+            Log.i("DEBUG","onCreate-1");
             try {
                 Future<SortedMap<String, Coin>> futureAllCoins = Common.getFuture(new Callable<SortedMap<String, Coin>>() {
                     @Override
@@ -88,11 +88,11 @@ public class AddNewBuyin extends Activity {
                 priceEditText = findViewById(R.id.add_buyinpriceEditText);
 
 
-                System.out.print("onCreate-2");
+                Log.i("DEBUG","onCreate-2");
 
                 allCoins = Common.getResult(futureAllCoins);
 
-                System.out.print("onCreate-3");
+                Log.i("DEBUG","onCreate-3");
 
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                         (this, android.R.layout.simple_spinner_item,
@@ -101,7 +101,7 @@ public class AddNewBuyin extends Activity {
                         .simple_spinner_dropdown_item);
                 comboAlLCoins.setAdapter(spinnerArrayAdapter);
 
-                System.out.print("onCreate-4");
+                Log.i("DEBUG","onCreate-4");
 
                 comboAlLCoins.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -175,19 +175,20 @@ public class AddNewBuyin extends Activity {
                                 return null;
                             }
                         });
+                        //didn't helpsed
                         Common.getResult(o);
 
                         setResult(Activity.RESULT_OK, null);
                         finish();
                     }
                 });
-                System.out.print("onCreate-5");
+                Log.i("DEBUG","onCreate-5");
 
                 coinSelected = nameToSymbol.get(coinsArray.get(0));
                 calendar = Calendar.getInstance();
                 setSelectedDate();
 
-                System.out.print("onCreate-6");
+                Log.i("DEBUG","onCreate-6");
 
                 break;
             } catch (Exception ex) {

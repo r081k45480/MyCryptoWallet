@@ -82,7 +82,8 @@ public class DBReaderImpl implements DBReader {
     private Coin makeCoinFromBuying(Buying b){
         Coin c= new Coin();
         c.setSymbol(b.getSymbol());
-        c.setAmount(b.getAmount());
+        // in query selected price as amount
+        c.setAmount(b.getPrice());
         c.setInput(b.getInput());
         return c;
     }

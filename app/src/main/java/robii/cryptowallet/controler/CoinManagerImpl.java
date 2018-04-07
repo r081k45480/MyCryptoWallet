@@ -49,7 +49,7 @@ public class CoinManagerImpl implements CoinManager{
 				allCoins = restReader.getAllCoins();
 			}
 		});
-		//tr.start();
+		tr.start();
 		
 	}
     SortedMap<String, Coin> allCoins;
@@ -97,10 +97,11 @@ public class CoinManagerImpl implements CoinManager{
 
     @Override
     public SortedMap<String, Coin> getAllCoins() {
-    	if(allCoins!=null)
-    		return allCoins;
-    	else 
-    		return restReader.getAllCoins();
+    	if(allCoins==null)
+    		allCoins = restReader.getAllCoins();
+
+		return allCoins;
+
     }
 
 	private void getMyCoinsWithoutPrices(){

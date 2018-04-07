@@ -144,10 +144,10 @@ public class MyCoinsAdapter extends BaseAdapter {
     }
 
     public void openAddNewCoin(){
-        System.out.print("openAddNewCoin-1");
+        Log.i("DEBUG","openAddNewCoin-1");
         Intent intent = new Intent(parent, AddNewBuyin.class);
         parent.startActivityForResult(intent,AddNewBuyin.REQUEST_CODE);
-        System.out.print("openAddNewCoin-2");
+        Log.i("DEBUG","openAddNewCoin-2");
     }
 
     private void readHeaderData() {

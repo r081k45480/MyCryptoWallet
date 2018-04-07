@@ -61,4 +61,12 @@ public class CoinDetailed extends Coin {
     public void setFutureBuyings(Future<List<Buying>> futureBuyings) {
         this.futureBuyings = futureBuyings;
     }
+
+    public String getLinkToCoinMarketCup(){
+		return Common.COIN_MARKET_CUP_LINK_BASE+convertToForLink(getName());
+	}
+
+    private static String convertToForLink(String name) {
+        return name.toLowerCase().replace(" ","-");
+    }
 }

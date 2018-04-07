@@ -12,6 +12,8 @@ public class Common {
 	public static final String currencySymbol = "€";
 	public static final String percentage = "%";
 
+	public static final String COIN_MARKET_CUP_LINK_BASE= "https://coinmarketcap.com/currencies/";
+
 	private static ExecutorService executor = Executors.newFixedThreadPool(8);
 	
     public static<T> Future<T> getFuture(Callable<T> task){
