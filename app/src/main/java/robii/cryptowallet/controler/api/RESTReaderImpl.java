@@ -157,8 +157,8 @@ public class RESTReaderImpl implements RESTReader{
             	map.put(dt,  pr);
             }
             	
-            for(Map.Entry<Date,Double> v : map.entrySet())
-            	System.out.println(v.getKey() + " ---> "+v.getValue());
+            //for(Map.Entry<Date,Double> v : map.entrySet())
+            //	System.out.println(v.getKey() + " ---> "+v.getValue());
             
             return map;
         }catch (JSONException ex){

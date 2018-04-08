@@ -9,6 +9,7 @@ import java.net.SocketOption;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -79,17 +80,19 @@ public class CoinManagerImpl implements CoinManager{
 			@RequiresApi(api = Build.VERSION_CODES.O)
 			@Override
 			public Double call() throws Exception {
-				Date d =  Date.from(ZonedDateTime.now().minusDays(7).toInstant());
+				Calendar c = Calendar.getInstance();
+				c.add(Calendar.DAY_OF_MONTH, -10);
+				Date d =  c.getTime();
 				return restReader.getHistoricalPrice(symbol, d);
 			}
 		});
 
     	CoinDetailed coin = dbReader.getCoin(symbol);
 
-		List<Buying> b = coin.getBuyings();
+		coin.setHistori(futureHistory);
+		coin.setPriceBefore7days(futurePriceBefore7Days);
 		coin.setCurrentPrice(Common.getResult(futurePrice));
-		coin.setHistori(Common.getResult(futureHistory));
-		coin.setPriceBefore7days(Common.getResult(futurePriceBefore7Days));
+
 		return coin;
     }
   

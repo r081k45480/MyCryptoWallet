@@ -3,6 +3,7 @@ package robii.cryptowallet;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,7 +94,15 @@ public class MyCoinsAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
             view = inflater.inflate(R.layout.my_coin_list_item, viewGroup, false);
 
-            //TODO: on click open detailed view
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int posititon = (int)view.getTag();
+                    Coin c = coins.get(posititon);
+                    String symbol = c.getSymbol();
+                    openDetailedVew(symbol);
+                }
+            });
         }
         TextView name = view.findViewById(R.id.textViewMyCoinName);
         ImageView imageView = view.findViewById(R.id.imageViewMyCoin);
@@ -103,13 +112,15 @@ public class MyCoinsAdapter extends BaseAdapter {
 
         Coin coin = coins.get(i);
 
+        view.setTag(i);
+
         name.setText(coin.getName());
         imageView.setImageBitmap(coin.getIcon());
-        amount.setText(Common.twoDecimals(coin.getAmount()) + " " + coin.getSymbol());
-        price.setText(Common.twoDecimals(coin.getCurrentPrice()) + Common.currencySymbol);
+        amount.setText(Common.twoDecimalsStr(coin.getAmount()) + " " + coin.getSymbol());
+        price.setText(Common.twoDecimalsStr(coin.getCurrentPrice()) + Common.currencySymbol);
 
         Double profit = coin.getProfit();
-        profitTextView.setText(Common.twoDecimals(profit) + " (" + Common.twoDecimals(coin.getPercentualProfit()) + Common.percentage + ")");
+        profitTextView.setText(Common.twoDecimalsStr(profit) + " (" + Common.twoDecimalsStr(coin.getPercentualProfit()) + Common.percentage + ")");
         if (profit >= 0) {
             profitTextView.setTextColor(Color.GREEN);
         } else {
@@ -117,6 +128,14 @@ public class MyCoinsAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    private void openDetailedVew(String symbol) {
+        Intent intent = new Intent(parent, DetailedCoinPreview.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(DetailedCoinPreview.SYMBOL_BUDLE_CODE, symbol);
+        intent.putExtras(bundle);
+        parent.startActivityForResult(intent, DetailedCoinPreview.REQUEST_CODE);
     }
 
     private View getHeaderView(int i, View view, ViewGroup viewGroup) {
@@ -150,19 +169,15 @@ public class MyCoinsAdapter extends BaseAdapter {
     }
 
     private void readHeaderData() {
-        totalInput.setText(Common.twoDecimals(coinManager.getSumInput()) + Common.currencySymbol);
-        totalCapital.setText(Common.twoDecimals(coinManager.getSumCurrentCapital()) + Common.currencySymbol);
+        totalInput.setText(Common.twoDecimalsStr(coinManager.getSumInput()) + Common.currencySymbol);
+        totalCapital.setText(Common.twoDecimalsStr(coinManager.getSumCurrentCapital()) + Common.currencySymbol);
         Double profit = coinManager.getSumProfit();
-        totalProfit.setText(Common.twoDecimals(profit) + Common.currencySymbol);
-        totalProfitPercentage.setText("("+Common.twoDecimals(coinManager.getSumPercentualProfit()) + Common.percentage+")");
+        totalProfit.setText(Common.twoDecimalsStr(profit) + Common.currencySymbol);
+        totalProfitPercentage.setText("("+Common.twoDecimalsStr(coinManager.getSumPercentualProfit()) + Common.percentage+")");
 
-        if(profit >= 0){
-            totalProfit.setTextColor(Color.GREEN);
-            totalProfitPercentage.setTextColor(Color.GREEN);
-        } else {
-            totalProfit.setTextColor(Color.RED);
-            totalProfitPercentage.setTextColor(Color.RED);
-        }
+        Common.setColorGoodOrBad( totalProfit, profit >= 0);
+        Common.setColorGoodOrBad( totalProfit, profit >= 0);
+
     }
 
 }

@@ -12,4 +12,16 @@
     <string name="add">Add</string>
     <string name="price_for_date">Price for date</string>
     <string name="select_coin">Select coin</string>
+    <string name="successfull_add_text">Successfully added investment. Please, refresh to check sum.</string>
+    <string name="title_activity_detailed_coin_preview">DetailedCoinPreview</string>
+    <string name="euro_simbol">€</string>
+    <string name="euros_symbol_per_coin">€/coin</string>
+    <string name="coins">coins</string>
+    <string name="percentage_simbol">%</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="timex_price_spaces">x price:</string>
+    <string name="_10_days_ago">10 days ago</string>
+    <string name="current_price">Current price:</string>
+    <string name="date_patern">yyyy-MM-dd</string>
+    <string name="time_patern">HH:mm</string>
 </resources>

@@ -62,7 +62,7 @@ public class DBReaderTest implements DBReader {
                 return database.buyingDao().getAllBySymbol(symbol);
             }
         });
-        cd.setFutureBuyings(buyings);
+        cd.setFuture(buyings);
         return cd;
     }
 

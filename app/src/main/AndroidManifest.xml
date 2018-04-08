@@ -26,6 +26,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="robii.cryptowallet.MainActivity" />
         </activity>
+        <activity
+            android:name=".DetailedCoinPreview"
+            android:label="@string/title_activity_detailed_coin_preview"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="robii.cryptowallet.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
 package robii.cryptowallet;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.support.v4.view.MotionEventCompat;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +36,7 @@ import robii.cryptowallet.model.CoinImageUrl;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static CoinManagerImpl coinManager;
+    public static CoinManager coinManager;
     public static MyDatabase database;
     public static MainActivity me;
 
@@ -43,11 +46,15 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private MyCoinsAdapter myCoinsAdapter;
 
+    public void initMe(){
+        me = this;
+        new Common(getResources());
+        coinManager = new CoinManagerImpl();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        me = this;
-
-        coinManager = new CoinManagerImpl();
+        initMe();
 
         if(database == null){
             database = Room.databaseBuilder(getApplicationContext(),MyDatabase.class, "mycryptos")
@@ -173,6 +180,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         // Check which request we're responding to
         if (requestCode == AddNewBuyin.REQUEST_CODE) {
             // no refresh!
+            if(resultCode == Activity.RESULT_OK){
+                ;
+            }
         }
     }
 
