@@ -19,14 +19,16 @@ public class Common {
 		try {
 			currencySymbol = resources.getString(R.string.euro_simbol);
 			percentage = resources.getString(R.string.percentage_simbol);
-			datePatter = resources.getString(R.string.date_patern);
-			timePatter = resources.getString(R.string.time_patern);
+			datePattern = resources.getString(R.string.date_patern);
+			timePattern = resources.getString(R.string.time_patern);
+			dateTimePattern = datePattern+" "+timePattern;
 		}catch (Exception e){
 			;
 		}
 	}
-	public static String datePatter;
-	public static String timePatter;
+	public static String datePattern;
+	public static String timePattern;
+	public static String dateTimePattern;
 	public static String currencySymbol = "";
 	public static String percentage = "";
 
@@ -47,7 +49,7 @@ public class Common {
 
     public static String twoDecimalsStr(Double v){
     	Double d = twoDecimals(v);
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("0.00");
 		return df.format(d);
 	}
 

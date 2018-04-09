@@ -43,7 +43,7 @@ public class Buying {
 	}
 	
 	public Double getProfit(){
-		return input - getCurrentCapital();
+		return getCurrentCapital() - input;
 	}
 	
 	public double getPercentualProfit(){

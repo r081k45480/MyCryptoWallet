@@ -1,11 +1,14 @@
 package robii.cryptowallet;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +50,8 @@ public class DetailedCoinPreview extends Activity {
     TextView capital_tv ;
     TextView result_tv ;
 
+    ListView buyings_lv;
+
     GraphView graph;
     Date minDate;
     Date maxDate;
@@ -83,13 +88,16 @@ public class DetailedCoinPreview extends Activity {
                 capital_tv = findViewById(R.id.details_current_capital);
                 result_tv = findViewById(R.id.details_curent_result);
 
+                buyings_lv= findViewById(R.id.buyings_list_veiw);
+
                 graph = findViewById(R.id.graph);
 
                 moreDetails_iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String link = coinDetailed.getLinkToCoinMarketCup();
-                        ;
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                        startActivity(browserIntent);
                     }
                 });
 
@@ -112,6 +120,8 @@ public class DetailedCoinPreview extends Activity {
 
                 initGraph();
 
+                BuyingsAdapter adapter = new BuyingsAdapter(coinDetailed.getBuyings());
+                buyings_lv.setAdapter(adapter);
                 break;
             } catch (Exception e) {
                 Log.e("ERROR", e.getMessage());
@@ -132,7 +142,7 @@ public class DetailedCoinPreview extends Activity {
             public void onTap(Series series, DataPointInterface dataPoint) {
                 Double d = dataPoint.getX();
                 Date date = new Date(d.longValue());
-                SimpleDateFormat sdf = new SimpleDateFormat(Common.datePatter+" "+Common.timePatter);
+                SimpleDateFormat sdf = new SimpleDateFormat(Common.dateTimePattern);
                 Toast.makeText(getActivity(), sdf.format(date)+" : "+dataPoint.getY(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -66,6 +66,7 @@ public class DBReaderImpl implements DBReader {
         Coin c = Common.getResult(futurecoin);
         CoinDetailed cd = new CoinDetailed(c);
         cd.setFuture(buyings);
+
         return cd;
     }
 

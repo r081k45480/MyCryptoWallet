@@ -238,8 +238,8 @@ public class AddNewBuyin extends Activity {
     public void setSelectedDate() {
         selectedDate = calendar.getTime();
 
-        SimpleDateFormat date_sdf = new SimpleDateFormat(Common.datePatter);
-        SimpleDateFormat time_sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat date_sdf = new SimpleDateFormat(Common.datePattern);
+        SimpleDateFormat time_sdf = new SimpleDateFormat(Common.timePattern);
 
         dateOfBuyinChoose.setText(date_sdf.format(selectedDate));
         timeOfBuyinChoose.setText(time_sdf.format(selectedDate));

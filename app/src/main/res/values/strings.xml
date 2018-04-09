@@ -19,7 +19,7 @@
     <string name="coins">coins</string>
     <string name="percentage_simbol">%</string>
     <string name="total_amount">Total Amount</string>
-    <string name="timex_price_spaces">x price:</string>
+    <string name="timex_price_spaces">* price:</string>
     <string name="_10_days_ago">10 days ago</string>
     <string name="current_price">Current price:</string>
     <string name="date_patern">yyyy-MM-dd</string>

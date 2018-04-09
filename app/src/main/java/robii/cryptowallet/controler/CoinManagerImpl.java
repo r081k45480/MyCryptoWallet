@@ -89,9 +89,15 @@ public class CoinManagerImpl implements CoinManager{
 
     	CoinDetailed coin = dbReader.getCoin(symbol);
 
+
 		coin.setHistori(futureHistory);
 		coin.setPriceBefore7days(futurePriceBefore7Days);
 		coin.setCurrentPrice(Common.getResult(futurePrice));
+
+		List<Buying> buyings = coin.getBuyings();
+		for(Buying b : buyings){
+			b.setCoin(coin);
+		}
 
 		return coin;
     }

@@ -16,7 +16,7 @@ import robii.cryptowallet.model.Buying;
 @Dao
 public interface BuyingDao {
 
-    @Query("SELECT * FROM Buying WHERE symbol = :symbol")
+    @Query("SELECT * FROM Buying WHERE symbol = :symbol ORDER BY date DESC")
     List<Buying> getAllBySymbol(String symbol);
 
     @Insert
