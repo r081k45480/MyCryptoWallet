@@ -219,11 +219,10 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginStart="-10dp"
         android:layout_marginTop="3dp"
         android:background="?attr/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/teeext_veieieieiei1"
+        app:layout_constraintStart_toEndOf="@+id/teeext_veieieieiei1213"
         app:layout_constraintTop_toBottomOf="@+id/textView1233" />
     <!-- curent capital -->
     <TextView
@@ -267,13 +266,13 @@
         android:id="@+id/teeext_veieieieiei1213"
         android:layout_width="0dp"
         android:layout_height="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/profit"
         android:textAlignment="textEnd"
         android:textColor="?attr/colorAccent"
-        app:layout_constraintEnd_toStartOf="@+id/details_current_capital"
+        app:layout_constraintEnd_toStartOf="@+id/details_curent_result"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teeext_veieieieiei121" />
 
@@ -286,7 +285,6 @@
         android:text="TextView"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/teeext_veieieieiei121"
         app:layout_constraintTop_toBottomOf="@+id/teeext_veieieieiei121" />
 
     <View

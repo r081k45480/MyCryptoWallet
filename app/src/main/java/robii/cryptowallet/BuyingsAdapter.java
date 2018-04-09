@@ -256,7 +256,7 @@ public class BuyingsAdapter extends BaseAdapter {
 
         // set date label formatter
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(parent));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(5);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(4);
 
         // set manual x bounds to have nice steps
         graph.getViewport().setMinX(minDate.getTime());

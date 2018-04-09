@@ -60,6 +60,7 @@ public class MyCoinsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(coins == null) return 1;
         return coins.size()+1;
     }
 
@@ -130,7 +131,7 @@ public class MyCoinsAdapter extends BaseAdapter {
         return view;
     }
 
-    private void openDetailedVew(String symbol) {
+    public void openDetailedVew(String symbol) {
         Intent intent = new Intent(parent, DetailedCoinPreview.class);
         Bundle bundle = new Bundle();
         bundle.putString(DetailedCoinPreview.SYMBOL_BUDLE_CODE, symbol);
@@ -151,7 +152,7 @@ public class MyCoinsAdapter extends BaseAdapter {
         openAddNewCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAddNewCoin();
+                openAddNewCoin(parent);
             }
         });
 
@@ -160,12 +161,6 @@ public class MyCoinsAdapter extends BaseAdapter {
         return view;
     }
 
-    public void openAddNewCoin(){
-        Log.i("DEBUG","openAddNewCoin-1");
-        Intent intent = new Intent(parent, AddNewBuyin.class);
-        parent.startActivityForResult(intent,AddNewBuyin.REQUEST_CODE);
-        Log.i("DEBUG","openAddNewCoin-2");
-    }
 
     private void readHeaderData() {
         totalInput.setText(Common.twoDecimalsStr(coinManager.getSumInput()) + Common.currencySymbol);

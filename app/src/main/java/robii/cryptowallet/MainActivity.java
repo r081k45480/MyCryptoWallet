@@ -10,6 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_main);
 
         android.support.v7.app.ActionBar ba = getSupportActionBar();
-        test();
+        //test();
 
         mSwipeRefreshLayout = findViewById(R.id.MainContainter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -133,20 +136,20 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 if(oo == null || oo.size() ==0 ) {
                     final Buying b = new Buying();
                     b.setInput(500.0);
-                    b.setDate(new Date(2017, 11, 3));
+                    b.setDate(new Date(117, 11, 3));
                     b.setSymbol("BTC");
                     b.setPrice(5000.0);
 
                     final Buying b1 = new Buying();
                     b1.setInput(100.0);
-                    b1.setDate(new Date(2017, 12, 29));
+                    b1.setDate(new Date(117, 12, 29));
                     b1.setPrice(10000.0);
                     b1.setSymbol("BTC");
 
 
                     final Buying cb = new Buying();
                     cb.setInput(250.0);
-                    cb.setDate(new Date(2017,12,10));
+                    cb.setDate(new Date(116,12,10));
                     cb.setPrice(390.0);
                     cb.setSymbol("ETH");
 
@@ -207,6 +210,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
+    public static void openAddNewCoin(Activity parent){
+        Intent intent = new Intent(parent, AddNewBuyin.class);
+        parent.startActivityForResult(intent,AddNewBuyin.REQUEST_CODE);
+    }
+
     @Override
     public void onRefresh() {
         try {
@@ -227,6 +235,33 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             if(resultCode == Activity.RESULT_OK){
                 ;
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        try {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu, menu);
+            return true;
+        } catch (Exception e){
+            Log.e("ERROR", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_button_menu_item:
+                openAddNewCoin(this);
+                return true;
+            case R.id.refresh_menu_item:
+                onRefresh();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
