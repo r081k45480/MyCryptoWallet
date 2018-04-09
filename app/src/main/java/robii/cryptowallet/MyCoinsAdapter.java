@@ -142,7 +142,6 @@ public class MyCoinsAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         view = inflater.inflate(R.layout.my_coin_header, viewGroup, false);
 
-
         totalInput = view.findViewById(R.id.textViewTotalInvestment);
         totalCapital = view.findViewById(R.id.textViewTotalCapital);
         totalProfit = view.findViewById(R.id.textViewCapital);
@@ -176,7 +175,7 @@ public class MyCoinsAdapter extends BaseAdapter {
         totalProfitPercentage.setText("("+Common.twoDecimalsStr(coinManager.getSumPercentualProfit()) + Common.percentage+")");
 
         Common.setColorGoodOrBad( totalProfit, profit >= 0);
-        Common.setColorGoodOrBad( totalProfit, profit >= 0);
+        Common.setColorGoodOrBad( totalProfitPercentage, profit >= 0);
 
     }
 

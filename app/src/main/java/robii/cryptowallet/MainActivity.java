@@ -1,32 +1,26 @@
 package robii.cryptowallet;
 
+import android.Manifest;
 import android.app.Activity;
 import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.provider.ContactsContract;
-import android.support.v4.view.MotionEventCompat;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
 
 import robii.cryptowallet.controler.CoinManager;
 import robii.cryptowallet.controler.CoinManagerImpl;
-import robii.cryptowallet.controler.api.RESTReaderImpl;
 import robii.cryptowallet.controler.db.MyDatabase;
 import robii.cryptowallet.model.Buying;
 import robii.cryptowallet.model.Coin;
@@ -35,6 +29,8 @@ import robii.cryptowallet.model.CoinImageUrl;
 
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+
+    public static final int PERMISSIONS_REQUEST = 8909;
 
     public static CoinManager coinManager;
     public static MyDatabase database;
@@ -52,8 +48,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         coinManager = new CoinManagerImpl();
     }
 
+    Bundle lastSavedInstanceState;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        lastSavedInstanceState = savedInstanceState;
+        checkMyPermissions();
+
         initMe();
 
         if(database == null){
@@ -61,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     .fallbackToDestructiveMigration()
                     .build();
         }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        android.support.v7.app.ActionBar ba = getSupportActionBar();
         test();
 
         mSwipeRefreshLayout = findViewById(R.id.MainContainter);
@@ -75,6 +76,49 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if(myCoinsAdapter == null)
             onRefresh();
 
+    }
+
+    private void checkMyPermissions() {
+        ArrayList<String> arrPerm = new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            arrPerm.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            arrPerm.add(Manifest.permission.INTERNET);
+        }
+        if(!arrPerm.isEmpty()) {
+            String[] permissions = new String[arrPerm.size()];
+            permissions = arrPerm.toArray(permissions);
+            ActivityCompat.requestPermissions(this, permissions, PERMISSIONS_REQUEST);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                int pCount = 0;
+                for(int i = 0; i < grantResults.length; i++) {
+                    String permission = permissions[i];
+                    if(Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
+                        if(grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            pCount++;
+                        }
+                    }
+                    if(Manifest.permission.INTERNET.equals(permission)) {
+                        if(grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            pCount++;
+                        }
+                    }
+                }
+                if(pCount <= 2)
+                    Toast.makeText(this,"No permissions..", Toast.LENGTH_LONG).show();// permission denied, boo! Disable the
+
+                break;
+            }
+        }
     }
 
     private void test() {

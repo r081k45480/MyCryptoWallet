@@ -6,10 +6,12 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,7 +38,7 @@ import robii.cryptowallet.model.*;
 
 import static robii.cryptowallet.MainActivity.*;
 
-public class AddNewBuyin extends Activity {
+public class AddNewBuyin extends AppCompatActivity{
 
     public static final int REQUEST_CODE = 22;
 
@@ -72,9 +74,6 @@ public class AddNewBuyin extends Activity {
             });
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_add_new_buyin);
-            if(getActionBar() != null)
-                getActionBar().setDisplayHomeAsUpEnabled(true);
-
 
             buying = new Buying();
 

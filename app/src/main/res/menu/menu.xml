@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_new_button_menu_item"
+        android:icon="@mipmap/ic_pluss_button"
+        android:title="@string/menu_item_add_buying"
+        app:showAsAction="ifRoom|always" />
+    <item
+        android:id="@+id/refresh_menu_item"
+        android:icon="@mipmap/ic_refresh"
+        android:title="@string/menu_item_refresh"
+        app:showAsAction="ifRoom|always" />
+</menu>

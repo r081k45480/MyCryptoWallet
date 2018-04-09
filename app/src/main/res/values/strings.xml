@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">MyCryptoWallet</string>
+    <string name="app_name">My Crypto Wallet</string>
     <string name="total_investments">Total investments</string>
     <string name="total_current_capital">Total current capital</string>
     <string name="profit">Profit</string>
     <string name="profit_dveTacke">Profit:</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_add_new_buyin">AddNewBuyin</string>
+    <string name="title_activity_add_new_buyin">Add New Buying</string>
     <string name="uplata">Investition</string>
     <string name="kolicina_value">Coins amount</string>
     <string name="date_time_of_buyin">Date and Time of Buyin</string>
@@ -13,7 +13,7 @@
     <string name="price_for_date">Price for date</string>
     <string name="select_coin">Select coin</string>
     <string name="successfull_add_text">Successfully added investment. Please, refresh to check sum.</string>
-    <string name="title_activity_detailed_coin_preview">DetailedCoinPreview</string>
+    <string name="title_activity_detailed_coin_preview">Detailed Preview</string>
     <string name="euro_simbol">€</string>
     <string name="euros_symbol_per_coin">€/coin</string>
     <string name="coins">coins</string>
@@ -24,4 +24,6 @@
     <string name="current_price">Current price:</string>
     <string name="date_patern">yyyy-MM-dd</string>
     <string name="time_patern">HH:mm</string>
+    <string name="menu_item_add_buying">Add Buying</string>
+    <string name="menu_item_refresh">Refresh</string>
 </resources>
