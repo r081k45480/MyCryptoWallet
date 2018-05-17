@@ -11,7 +11,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -208,7 +207,7 @@ public class AddNewBuyin extends AppCompatActivity{
             input = Double.parseDouble(amountEditText.getText() + "");
         } catch (Exception e){}
 
-        buying.setAmount(input);
+        buying.setAndCalculateAmount(input);
 
         updateAutoSetterFields();
     }

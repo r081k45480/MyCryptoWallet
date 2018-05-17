@@ -4,9 +4,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.Nullable;
 
+import java.io.OptionalDataException;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 import robii.cryptowallet.model.converter.DateConverter;
 
@@ -23,19 +26,29 @@ public class Buying {
 
 	protected Double input;
 	protected Double price;
+	protected Double amount;
 
 	@Ignore
 	protected Coin coin;
 	
 	public Double getAmount(){
+		//manual added amount
+		if(amount != null)
+			return amount;
+
 		if(input == null) input = 0.0;
 		if(price == null) return 0.0;
 		return input/price;
 	}
 
-	public void setAmount(double amount){
+	public void setAndCalculateAmount(double amount){
 		if(price == null || price == 0.0) return;
 		input = amount*price;
+		setAmount(amount);
+	}
+
+	public void setAmount(double amount){
+		this.amount = amount;
 	}
 	
 	public Double getCurrentCapital(){

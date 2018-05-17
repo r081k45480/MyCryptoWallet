@@ -20,14 +20,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 
 import robii.cryptowallet.controler.CoinManager;
 import robii.cryptowallet.controler.CoinManagerImpl;
 import robii.cryptowallet.controler.db.MyDatabase;
 import robii.cryptowallet.model.Buying;
-import robii.cryptowallet.model.Coin;
-import robii.cryptowallet.model.CoinDetailed;
 import robii.cryptowallet.model.CoinImageUrl;
 
 
@@ -68,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        android.support.v7.app.ActionBar ba = getSupportActionBar();
-        //test();
+        test();
 
         mSwipeRefreshLayout = findViewById(R.id.MainContainter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -134,59 +132,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     }
                 }).get();
                 if(oo == null || oo.size() ==0 ) {
-                    final Buying b = new Buying();
-                    b.setInput(500.0);
-                    b.setDate(new Date(117, 11, 3));
-                    b.setSymbol("BTC");
-                    b.setPrice(5000.0);
-
-                    final Buying b1 = new Buying();
-                    b1.setInput(100.0);
-                    b1.setDate(new Date(117, 12, 29));
-                    b1.setPrice(10000.0);
-                    b1.setSymbol("BTC");
-
-
-                    final Buying cb = new Buying();
-                    cb.setInput(250.0);
-                    cb.setDate(new Date(116,12,10));
-                    cb.setPrice(390.0);
-                    cb.setSymbol("ETH");
-
-                    final Buying cb1 = new Buying();
-                    cb1.setInput(250.0);
-                    cb1.setDate(new Date());
-                    cb1.setPrice(670.0);
-                    cb1.setSymbol("ETH");
-
-                    final Buying cb2 = new Buying();
-                    cb2.setInput(50.0);
-                    cb2.setDate(new Date());
-                    cb2.setPrice(670.0);
-                    cb2.setSymbol("ETH");
-
-                    List<Buying> oo111 = Common.getFuture(new Callable<List<Buying>>() {
-                        @Override
-                        public List<Buying> call() {
-                            coinManager.getAllCoins();
-                            return null;
-                        }
-                    }).get();
-                    List<CoinImageUrl> urls = Common.getFuture(new Callable<List<CoinImageUrl>>() {
-                        @Override
-                        public List<CoinImageUrl> call() {
-                            return database.coinImageUrlDao().getAll();
-                        }
-                    }).get();
-
-                    List<Buying> oo1 = Common.getFuture(new Callable<List<Buying>>() {
-                        @Override
-                        public List<Buying> call() {
-                            database.buyingDao().insertAll(b, b1, cb, cb1, cb2);
-                            return null;
-                        }
-                    }).get();
-
+                    inputTestData();
                 }
                 List<CoinImageUrl> urls = Common.getFuture(new Callable<List<CoinImageUrl>>() {
                     @Override
@@ -263,6 +209,70 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void inputTestData() throws ExecutionException, InterruptedException {
+        final Buying btc = new Buying();
+        btc.setSymbol("BTC");
+        btc.setDate(new Date(117, 11, 3));
+        btc.setInput(200.0);
+        btc.setAmount(0.04075);
+        btc.setPrice(dolarToEuro(7225.0));
+
+        final Buying eth1= new Buying();
+        eth1.setSymbol("ETH");
+        eth1.setDate(new Date(117, 11, 20));
+        eth1.setInput(50.0);
+        eth1.setAmount(0.15);
+        eth1.setPrice(dolarToEuro(420.0));
+
+        final Buying eth2= new Buying();
+        eth2.setSymbol("ETH");
+        eth2.setDate(new Date(117, 12, 1));
+        eth2.setInput(50.0);
+        eth2.setAmount(0.151);
+        eth2.setPrice(dolarToEuro(720.0));
+
+        final Buying bcc= new Buying();
+        bcc.setSymbol("BCH");
+        bcc.setDate(new Date(118, 1,1 ));
+        bcc.setInput(50.0);
+        bcc.setAmount(0.13675);
+        bcc.setPrice(dolarToEuro(2400.0));
+
+        final Buying btg= new Buying();
+        btg.setSymbol("BTG");
+        btg.setDate(new Date(118, 1,20 ));
+        btg.setInput(50.0);
+        btg.setAmount(0.71073);
+        btg.setPrice(dolarToEuro(236.0));
+
+        final Buying dash = new Buying();
+        dash.setSymbol("DASH");
+        dash.setDate(new Date(118, 1,20 ));
+        dash.setInput(50.0);
+        dash.setAmount(0.12566);
+        dash.setPrice(dolarToEuro(1024.0));
+
+        final Buying xrp = new Buying();
+        xrp.setSymbol("XRP");
+        xrp.setDate(new Date(118, 1,20 ));
+        xrp.setInput(50.0);
+        xrp.setAmount(70.2389);
+        xrp.setPrice(dolarToEuro(2.1));
+
+        List<Buying> oo1 = Common.getFuture(new Callable<List<Buying>>() {
+            @Override
+            public List<Buying> call() {
+                database.buyingDao().insertAll(btc, eth1, eth2, bcc, xrp, btg, dash);
+                return null;
+            }
+        }).get();
+
+    }
+
+    public static double dolarToEuro(double in){
+        return in*0.85;
     }
 
 }

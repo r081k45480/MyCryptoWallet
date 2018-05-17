@@ -84,7 +84,7 @@ public class DBReaderImpl implements DBReader {
         Coin c= new Coin();
         c.setSymbol(b.getSymbol());
         // in query selected price as amount
-        c.setAmount(b.getPrice());
+        c.setAmount(b.getAmount());
         c.setInput(b.getInput());
         return c;
     }

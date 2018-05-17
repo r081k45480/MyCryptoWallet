@@ -25,10 +25,11 @@ public interface BuyingDao {
     @Delete
     void delete(Buying b);
 
-    @Query("SELECT symbol, sum(input) as input, max(date) as date, sum(input/price) as price " +
+    @Query("SELECT symbol, sum(input) as input, max(date) as date, sum(amount) as amount " +
             "FROM Buying WHERE input > 0 GROUP BY symbol")
     List<Buying> getGrouped();
 
-    @Query("SELECT symbol, sum(input) AS input, max(date) AS date, max(input/price) AS price FROM Buying GROUP BY symbol HAVING symbol =:symbol LIMIT 1")
+    @Query("SELECT symbol, sum(input) AS input, max(date) AS date, max(amount) AS amount " +
+            "FROM Buying GROUP BY symbol HAVING symbol =:symbol LIMIT 1")
     Buying getGrouped(String symbol);
 }
