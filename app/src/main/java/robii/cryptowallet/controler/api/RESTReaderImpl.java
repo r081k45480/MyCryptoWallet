@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -169,20 +170,26 @@ public class RESTReaderImpl implements RESTReader{
     }
     
     private String getFromAddress(String adress, Map<String, String> params){
+        String charSet = "UTF-8";
         BufferedReader in = null;
         try {
         	String addressWithParams = params.size()>0? adress+"?" : adress;
             for (Map.Entry<String, String> param : params.entrySet()) {
-            	addressWithParams += (param.getKey()+"="+param.getValue()) + "&";
+                String key = param.getKey();
+                String value = param.getValue();
+            	addressWithParams += (
+            	        URLEncoder.encode(key, charSet)+
+                                "="+
+                        URLEncoder.encode(value,charSet)) + "&";
             }
             addressWithParams = addressWithParams.substring(0, addressWithParams.length()-1);
             
             URL url = new URL(addressWithParams);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
+            httpCon.setDoInput(true);
             httpCon.setRequestMethod("GET");
             httpCon.setRequestProperty("Content-Type", "application/json");
-
+            httpCon.connect();
 
             in = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
             String line;
@@ -202,4 +209,6 @@ public class RESTReaderImpl implements RESTReader{
             }catch (Exception e){}
         }
     }
+
+
 }

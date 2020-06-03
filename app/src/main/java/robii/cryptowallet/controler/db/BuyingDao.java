@@ -32,4 +32,7 @@ public interface BuyingDao {
     @Query("SELECT symbol, sum(input) AS input, max(date) AS date, max(amount) AS amount " +
             "FROM Buying GROUP BY symbol HAVING symbol =:symbol LIMIT 1")
     Buying getGrouped(String symbol);
+
+    @Query("DELETE FROM Buying")
+    void deleteAll();
 }

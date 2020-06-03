@@ -2,7 +2,9 @@ package robii.cryptowallet;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -206,11 +208,50 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             case R.id.refresh_menu_item:
                 onRefresh();
                 return true;
+            case R.id.clear_all_menu_item:
+                clearAllClicked(item);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    public void clearAllClicked(MenuItem item){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        try {
+                            clearAll();
+                        } catch (Exception e) {
+                            Log.e("error", e.getMessage());
+                            e.printStackTrace();
+                        }
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    public void clearAll() throws ExecutionException, InterruptedException {
+            Common.getFuture(new Callable<Boolean>() {
+                @Override
+                public Boolean call() {
+                    database.buyingDao().deleteAll();
+                    return true;
+                }
+            }).get();
+            onRefresh();
+    }
     private void inputTestData() throws ExecutionException, InterruptedException {
         final Buying btc = new Buying();
         btc.setSymbol("BTC");

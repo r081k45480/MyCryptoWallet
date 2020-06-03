@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CryptoWallet.iml" filepath="$PROJECT_DIR$/CryptoWallet.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CryptoWallet_Android.iml" filepath="$PROJECT_DIR$/CryptoWallet_Android.iml" group="CryptoWallet_Android" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="CryptoWallet_Android/app" />
     </modules>
   </component>
 </project>

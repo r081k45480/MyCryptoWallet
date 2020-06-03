@@ -26,4 +26,5 @@
     <string name="time_patern">HH:mm</string>
     <string name="menu_item_add_buying">Add Buying</string>
     <string name="menu_item_refresh">Refresh</string>
+    <string name="menu_item_clear_all">Clear all</string>
 </resources>
