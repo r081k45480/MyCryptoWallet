@@ -18,9 +18,6 @@ import robii.cryptowallet.model.comparators.CoinAmountComparator;
 
 import static robii.cryptowallet.MainActivity.database;
 
-/**
- * Created by Robert Sabo on 10-Feb-18.
- */
 public class DBReaderImpl implements DBReader {
 
     List<Coin> myCoins;

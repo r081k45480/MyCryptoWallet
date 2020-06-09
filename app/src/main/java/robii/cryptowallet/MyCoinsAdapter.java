@@ -29,10 +29,6 @@ import robii.cryptowallet.model.Coin;
 import static robii.cryptowallet.MainActivity.*;
 
 
-/**
- * Created by Robert Sabo on 10-Feb-18.
- */
-
 public class MyCoinsAdapter extends BaseAdapter {
 
     List<Coin> coins;
@@ -77,6 +73,8 @@ public class MyCoinsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         try{
+            // this is a logic to make first item the details
+            // and others to have cumulative by coins
             if(i>0) {
                 i--;
                 return getViewForItem(i, view, viewGroup);
@@ -89,6 +87,7 @@ public class MyCoinsAdapter extends BaseAdapter {
         }
     }
 
+    // View for other elements
     private View getViewForItem(int i, View view, ViewGroup viewGroup) {
         // init any of items in list
         if (view == null) {
@@ -131,14 +130,7 @@ public class MyCoinsAdapter extends BaseAdapter {
         return view;
     }
 
-    public void openDetailedVew(String symbol) {
-        Intent intent = new Intent(parent, DetailedCoinPreview.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(DetailedCoinPreview.SYMBOL_BUDLE_CODE, symbol);
-        intent.putExtras(bundle);
-        parent.startActivityForResult(intent, DetailedCoinPreview.REQUEST_CODE);
-    }
-
+    // First element is header one..
     private View getHeaderView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         view = inflater.inflate(R.layout.my_coin_header, viewGroup, false);
@@ -161,6 +153,14 @@ public class MyCoinsAdapter extends BaseAdapter {
         return view;
     }
 
+
+    public void openDetailedVew(String symbol) {
+        Intent intent = new Intent(parent, DetailedCoinPreview.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(DetailedCoinPreview.SYMBOL_BUDLE_CODE, symbol);
+        intent.putExtras(bundle);
+        parent.startActivityForResult(intent, DetailedCoinPreview.REQUEST_CODE);
+    }
 
     private void readHeaderData() {
         totalInput.setText(Common.twoDecimalsStr(coinManager.getSumInput()) + Common.currencySymbol);

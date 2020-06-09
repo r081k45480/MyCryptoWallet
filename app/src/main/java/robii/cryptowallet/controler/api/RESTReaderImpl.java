@@ -23,9 +23,6 @@ import java.util.TreeMap;
 import robii.cryptowallet.model.Coin;
 
 
-/**
- * Created by Robert Sabo on 04-Feb-18.
- */
 public class RESTReaderImpl implements RESTReader{
 
     public static final String URL_BASE = "https://min-api.cryptocompare.com/data/";

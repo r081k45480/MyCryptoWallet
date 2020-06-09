@@ -19,9 +19,6 @@ import robii.cryptowallet.Common;
 
 import static robii.cryptowallet.MainActivity.*;
 
-/**
- * Created by Robert Sabo on 04-Feb-18.
- */
 
 public class Coin implements Comparable<Coin>{
     protected String symbol;

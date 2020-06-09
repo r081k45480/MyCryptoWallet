@@ -27,12 +27,7 @@ import java.util.List;
 import java.util.SortedMap;
 
 import robii.cryptowallet.model.Buying;
-import robii.cryptowallet.model.Coin;
 import robii.cryptowallet.model.CoinDetailed;
-
-/**
- * Created by Robert Sabo on 09-Apr-18.
- */
 
 public class BuyingsAdapter extends BaseAdapter {
 
@@ -63,7 +58,7 @@ public class BuyingsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.i("DEBUG", "i = "+i+" ; --> on thread: "+Thread.currentThread().getId());
+
         if (i > 0) {
             i--;
             return getViewForItem(i, view, viewGroup);
@@ -75,38 +70,33 @@ public class BuyingsAdapter extends BaseAdapter {
     }
 
     public View getViewForItem(int i , View view, ViewGroup viewGroup){
-        while(true) {
-            try {
 
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                view = inflater.inflate(R.layout.buying_list_item, viewGroup, false);
+        try {
+            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+            view = inflater.inflate(R.layout.buying_list_item, viewGroup, false);
 
+            Buying buying = buyings.get(i);
 
-                Buying buying = buyings.get(i);
+            TextView date = view.findViewById(R.id.bli_date);
+            TextView buyinTime = view.findViewById(R.id.bli_buyin_time);
+            TextView nowTime = view.findViewById(R.id.bli_now);
+            TextView result = view.findViewById(R.id.bli_result);
 
-                TextView date = view.findViewById(R.id.bli_date);
-                TextView buyinTime = view.findViewById(R.id.bli_buyin_time);
-                TextView nowTime = view.findViewById(R.id.bli_now);
-                TextView result = view.findViewById(R.id.bli_result);
+            SimpleDateFormat sdf = new SimpleDateFormat(Common.dateTimePattern);
 
-                SimpleDateFormat sdf = new SimpleDateFormat(Common.dateTimePattern);
+            date.setText(sdf.format(buying.getDate()));
 
-                date.setText(sdf.format(buying.getDate()));
+            buyinTime.setText(makeBuyinTimeString(buying));
+            nowTime.setText(makeNowTimeString(buying));
+            result.setText(makeResultString(buying));
 
-                buyinTime.setText(makeBuyinTimeString(buying));
-                nowTime.setText(makeNowTimeString(buying));
-                result.setText(makeResultString(buying));
+            Common.setColorGoodOrBad(result, buying.getProfit() >= 0);
 
-                Common.setColorGoodOrBad(result, buying.getProfit() >= 0);
-
-
-                return view;
-
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage());
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
+            e.printStackTrace();
         }
+        return view;
     }
 
     private String makeBuyinTimeString(Buying buying) {
@@ -173,64 +163,63 @@ public class BuyingsAdapter extends BaseAdapter {
 
     public View getHeaderView(View view, ViewGroup viewGroup){
 
-        while (true) {
-            try {
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                view = inflater.inflate(R.layout.buying_header, viewGroup, false);
+        try {
+            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+            view = inflater.inflate(R.layout.buying_header, viewGroup, false);
 
-                nameOfCoin_tv = view.findViewById(R.id.details_name_of_coin);
-                myCoinImage_iv = view.findViewById(R.id.details_imageViewMyCoin);
-                moreDetails_iv = view.findViewById(R.id.details_more_details);
+            nameOfCoin_tv = view.findViewById(R.id.details_name_of_coin);
+            myCoinImage_iv = view.findViewById(R.id.details_imageViewMyCoin);
+            moreDetails_iv = view.findViewById(R.id.details_more_details);
 
-                before7days_tv = view.findViewById(R.id.details_before_7days);
-                currentPrice_tv = view.findViewById(R.id.details_current_price);
+            before7days_tv = view.findViewById(R.id.details_before_7days);
+            currentPrice_tv = view.findViewById(R.id.details_current_price);
 
-                investment_tv = view.findViewById(R.id.details_total_investment);
-                amount_tv = view.findViewById(R.id.details_total_amount);
-                currentPriceagain_tv = view.findViewById(R.id.details_current_price_again);
-                capital_tv = view.findViewById(R.id.details_current_capital);
-                result_tv = view.findViewById(R.id.details_curent_result);
+            investment_tv = view.findViewById(R.id.details_total_investment);
+            amount_tv = view.findViewById(R.id.details_total_amount);
+            currentPriceagain_tv = view.findViewById(R.id.details_current_price_again);
+            capital_tv = view.findViewById(R.id.details_current_capital);
+            result_tv = view.findViewById(R.id.details_curent_result);
 
-                graph = view.findViewById(R.id.graph);
-
-
-                moreDetails_iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String link = coinDetailed.getLinkToCoinMarketCup();
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                        parent.startActivity(browserIntent);
-                    }
-                });
-
-                nameOfCoin_tv.setText(coinDetailed.getName());
-                myCoinImage_iv.setImageBitmap(coinDetailed.getIcon());
-
-                String curPrice = Common.twoDecimalsStr(coinDetailed.getCurrentPrice());
-                before7days_tv.setText(Common.twoDecimalsStr(coinDetailed.getPriceBefore7days()));
-                currentPrice_tv.setText(curPrice);
-
-                investment_tv.setText(Common.twoDecimalsStr(coinDetailed.getInput()));
-                amount_tv.setText(Common.twoDecimalsStr(coinDetailed.getAmount()));
-                currentPriceagain_tv.setText(curPrice);
-                capital_tv.setText(Common.twoDecimalsStr(coinDetailed.getCurrentCapital()));
+            graph = view.findViewById(R.id.graph);
 
 
-                String profitWithPercentager = getProfitWithPercentage();
-                result_tv.setText(profitWithPercentager);
-                Common.setColorGoodOrBad(result_tv, coinDetailed.getCurrentResult() >= 0);
+            moreDetails_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String link = coinDetailed.getLinkToCoinMarketCup();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    parent.startActivity(browserIntent);
+                }
+            });
 
-                Log.i("DEBUG",Thread.currentThread().getId()+" ->"+" before init");
-                initGraph();
+            nameOfCoin_tv.setText(coinDetailed.getName());
+            myCoinImage_iv.setImageBitmap(coinDetailed.getIcon());
+
+            String curPrice = Common.twoDecimalsStr(coinDetailed.getCurrentPrice());
+            before7days_tv.setText(Common.twoDecimalsStr(coinDetailed.getPriceBefore7days()));
+            currentPrice_tv.setText(curPrice);
+
+            investment_tv.setText(Common.twoDecimalsStr(coinDetailed.getInput()));
+            amount_tv.setText(Common.twoDecimalsStr(coinDetailed.getAmount()));
+            currentPriceagain_tv.setText(curPrice);
+            capital_tv.setText(Common.twoDecimalsStr(coinDetailed.getCurrentCapital()));
 
 
-                Log.i("DEBUG",Thread.currentThread().getId()+" ->"+" before return");
-                return view;
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage());
-                e.printStackTrace();
-            }
+            String profitWithPercentager = getProfitWithPercentage();
+            result_tv.setText(profitWithPercentager);
+            Common.setColorGoodOrBad(result_tv, coinDetailed.getCurrentResult() >= 0);
+
+            Log.i("DEBUG",Thread.currentThread().getId()+" ->"+" before init");
+            initGraph();
+
+
+            Log.i("DEBUG",Thread.currentThread().getId()+" ->"+" before return");
+
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
+            e.printStackTrace();
         }
+        return view;
     }
 
     private void initGraph(){
@@ -266,8 +255,6 @@ public class BuyingsAdapter extends BaseAdapter {
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
         graph.getGridLabelRenderer().setHumanRounding(false);
-
-
     }
 
     public DataPoint[] getDataPoints() {

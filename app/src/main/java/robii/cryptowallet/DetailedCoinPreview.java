@@ -49,27 +49,26 @@ public class DetailedCoinPreview extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        while(true){
-            try {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_detailed_coin_preview);
 
-                Bundle bundle = getIntent().getExtras();
-                String symbol = bundle.getString(SYMBOL_BUDLE_CODE);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_detailed_coin_preview);
 
-                // get Data
-                coinDetailed = coinManager.getDetailedCoin(symbol);
+            Bundle bundle = getIntent().getExtras();
+            String symbol = bundle.getString(SYMBOL_BUDLE_CODE);
 
-                buyings_lv= findViewById(R.id.buyings_list_veiw);
+            // get Data
+            coinDetailed = coinManager.getDetailedCoin(symbol);
 
-                BuyingsAdapter adapter = new BuyingsAdapter(coinDetailed, this);
-                buyings_lv.setAdapter(adapter);
-                break;
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage());
-                e.printStackTrace();
-            }
+            buyings_lv= findViewById(R.id.buyings_list_veiw);
+
+            BuyingsAdapter adapter = new BuyingsAdapter(coinDetailed, this);
+            buyings_lv.setAdapter(adapter);
+        } catch (Exception e) {
+            Log.e("ERROR", e.getMessage());
+            e.printStackTrace();
         }
+
         System.out.print("Done!");
     }
 

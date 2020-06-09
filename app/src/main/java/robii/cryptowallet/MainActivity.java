@@ -34,6 +34,7 @@ import robii.cryptowallet.model.CoinImageUrl;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
+
     public static final int PERMISSIONS_REQUEST = 8909;
 
     public static CoinManager coinManager;
@@ -81,11 +82,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
 
+    // region  Permissions checking...
     private void checkMyPermissions() {
         ArrayList<String> arrPerm = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            arrPerm.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
+
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             arrPerm.add(Manifest.permission.INTERNET);
         }
@@ -105,24 +105,20 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 int pCount = 0;
                 for(int i = 0; i < grantResults.length; i++) {
                     String permission = permissions[i];
-                    if(Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
-                        if(grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                            pCount++;
-                        }
-                    }
                     if(Manifest.permission.INTERNET.equals(permission)) {
                         if(grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                             pCount++;
                         }
                     }
                 }
-                if(pCount <= 2)
+                if(pCount != 1)
                     Toast.makeText(this,"No permissions..", Toast.LENGTH_LONG).show();// permission denied, boo! Disable the
 
                 break;
             }
         }
     }
+    // endregion Permissions checking
 
     private void test() {
         while(true) {
@@ -158,11 +154,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
+    // Open new activity to add new buying
     public static void openAddNewCoin(Activity parent){
         Intent intent = new Intent(parent, AddNewBuyin.class);
         parent.startActivityForResult(intent,AddNewBuyin.REQUEST_CODE);
     }
 
+
+    // Refresh
     @Override
     public void onRefresh() {
         try {
@@ -280,14 +279,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         bcc.setInput(50.0);
         bcc.setAmount(0.13675);
         bcc.setPrice(dolarToEuro(2400.0));
-
+/*
         final Buying btg= new Buying();
         btg.setSymbol("BTG");
         btg.setDate(new Date(118, 1,20 ));
         btg.setInput(50.0);
         btg.setAmount(0.71073);
         btg.setPrice(dolarToEuro(236.0));
-
+*/
         final Buying dash = new Buying();
         dash.setSymbol("DASH");
         dash.setDate(new Date(118, 1,20 ));
@@ -305,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         List<Buying> oo1 = Common.getFuture(new Callable<List<Buying>>() {
             @Override
             public List<Buying> call() {
-                database.buyingDao().insertAll(btc, eth1, eth2, bcc, xrp, btg, dash);
+                database.buyingDao().insertAll(btc, eth1, eth2, bcc, xrp, dash);
                 return null;
             }
         }).get();

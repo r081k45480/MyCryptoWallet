@@ -6,9 +6,6 @@ import android.arch.persistence.room.Database;
 import robii.cryptowallet.model.Buying;
 import robii.cryptowallet.model.CoinImageUrl;
 
-/**
- * Created by Robert Sabo on 19-Feb-18.
- */
 
 @Database(entities = {Buying.class, CoinImageUrl.class}, version = 4)
 public abstract class MyDatabase extends RoomDatabase {

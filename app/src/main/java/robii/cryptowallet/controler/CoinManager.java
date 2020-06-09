@@ -7,9 +7,6 @@ import java.util.SortedMap;
 import robii.cryptowallet.model.Coin;
 import robii.cryptowallet.model.CoinDetailed;
 
-/**
- * Created by Robert Sabo on 04-Feb-18.
- */
 public interface CoinManager {
 
 	///DetailedCoinView

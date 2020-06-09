@@ -30,9 +30,6 @@ import robii.cryptowallet.model.Coin;
 import robii.cryptowallet.model.CoinDetailed;
 import robii.cryptowallet.model.comparators.CoinAmountComparator;
 
-/**
- * Created by Robert Sabo on 04-Feb-18.
- */
 public class CoinManagerImpl implements CoinManager{
 
 	public RESTReader restReader;

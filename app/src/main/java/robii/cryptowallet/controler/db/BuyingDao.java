@@ -9,10 +9,6 @@ import java.util.List;
 
 import robii.cryptowallet.model.Buying;
 
-/**
- * Created by Robert Sabo on 19-Feb-18.
- */
-
 @Dao
 public interface BuyingDao {
 

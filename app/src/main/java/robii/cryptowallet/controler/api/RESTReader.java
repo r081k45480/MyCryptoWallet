@@ -8,9 +8,6 @@ import java.util.SortedMap;
 
 import robii.cryptowallet.model.Coin;
 
-/**
- * Created by Robert Sabo on 04-Feb-18.
- */
 public interface RESTReader {
 
     public SortedMap<String, Coin> getAllCoins();

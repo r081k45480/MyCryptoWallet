@@ -10,9 +10,6 @@ import java.util.List;
 
 import robii.cryptowallet.model.CoinImageUrl;
 
-/**
- * Created by Robert Sabo on 20-Feb-18.
- */
 @Dao
 public interface CoinImageUrlDao {
 

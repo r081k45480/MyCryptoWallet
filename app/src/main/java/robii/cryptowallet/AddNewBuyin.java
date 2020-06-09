@@ -102,14 +102,14 @@ public class AddNewBuyin extends AppCompatActivity{
             investmentEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                    investmendChosed();
+                    investmentChoosed();
                     return true;
                 }
             });
             investmentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
-                    investmendChosed();
+                    investmentChoosed();
                 }
             });
             amountEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -142,7 +142,6 @@ public class AddNewBuyin extends AppCompatActivity{
                             return null;
                         }
                     });
-                    //didn't helpsed
                     Common.getResult(o);
 
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.successfull_add_text), Toast.LENGTH_LONG).show();
@@ -212,7 +211,7 @@ public class AddNewBuyin extends AppCompatActivity{
         updateAutoSetterFields();
     }
 
-    private void investmendChosed() {
+    private void investmentChoosed() {
         double input = 0.0;
         try {
             input = Double.parseDouble(investmentEditText.getText() + "");
@@ -230,8 +229,6 @@ public class AddNewBuyin extends AppCompatActivity{
             updatePrice();
         }
     }
-
-
 
     public void setSelectedDate() {
         selectedDate = calendar.getTime();
@@ -274,6 +271,8 @@ public class AddNewBuyin extends AppCompatActivity{
         updateAutoSetterFields();
     }
 
+    // region DateAndTime pickers fragments
+
     public static class DatePickerFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
 
@@ -315,4 +314,5 @@ public class AddNewBuyin extends AppCompatActivity{
             me.setSelectedDate();
         }
     }
+    // endregion
 }

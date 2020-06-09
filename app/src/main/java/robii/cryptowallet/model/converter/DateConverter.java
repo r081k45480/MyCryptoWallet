@@ -4,10 +4,6 @@ import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
 
-/**
- * Created by Robert Sabo on 19-Feb-18.
- */
-
 public class DateConverter {
     @TypeConverter
     public static Long fromDate(Date date) {
