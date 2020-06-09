@@ -51,6 +51,10 @@ public class Coin implements Comparable<Coin>{
         imageUrl = url;
     }
 
+    /**
+     * Save imageUrl and name to Database
+     * This is kind of cache, not to read always from server
+     */
     public void saveIfNotExists(){
         final String url = imageUrl;
         final String name = this.name;
@@ -69,6 +73,9 @@ public class Coin implements Comparable<Coin>{
         });
     }
 
+    /**
+     * Start loading image and name from server and Database
+     */
     private void initFutureIcon(){
         if(icon != null || futureIcon != null) return;
 
@@ -118,7 +125,11 @@ public class Coin implements Comparable<Coin>{
     public double getProfit(){
     	return (getCurrentCapital() - input);
     }
-    
+
+    /**
+     * Set symbol and load from name and imageUrl from database and remote server
+     * @param symbol
+     */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
         initFutureIcon();

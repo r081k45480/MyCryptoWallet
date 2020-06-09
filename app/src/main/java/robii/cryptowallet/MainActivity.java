@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 }).get();
                 if(oo == null || oo.size() ==0 ) {
                     inputTestData();
+                    coinManager.getAllCoins();
                 }
                 List<CoinImageUrl> urls = Common.getFuture(new Callable<List<CoinImageUrl>>() {
                     @Override

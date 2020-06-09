@@ -40,6 +40,13 @@ public class CoinManagerImpl implements CoinManager{
 		this.dbReader = new DBReaderImpl();
 		restReader = new RESTReaderImpl();
 
+		readAllCoinsFromServerAsync();
+	}
+
+	/**
+	 * Get all coins async from server
+	 */
+	private void readAllCoinsFromServerAsync() {
 		Thread tr = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -53,6 +60,7 @@ public class CoinManagerImpl implements CoinManager{
 		});
 		tr.start();
 	}
+
 	Future<SortedMap<String ,Coin>> futureAllCoins;
     SortedMap<String, Coin> allCoins;
     Map<String, Coin> myCoinsMap;
@@ -105,7 +113,11 @@ public class CoinManagerImpl implements CoinManager{
         return restReader.getHistoricalPrice(symbol, dateTime);
     }
 
-    @Override
+	/**
+	 * Wait for previously started thread
+	 * @return
+	 */
+	@Override
     public SortedMap<String, Coin> getAllCoins() {
     	if(allCoins==null)
     		allCoins = Common.getResult(futureAllCoins);
